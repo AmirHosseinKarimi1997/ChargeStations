@@ -1,4 +1,5 @@
 ﻿
+using FluentValidation;
 using MediatR;
 
 namespace GreenFlux.Application.Groups.Commands.UpdateChargeStationInGroup;
@@ -19,3 +20,20 @@ public class UpdateChargeStationInGroupCommand : IRequest<bool>
     public string Name { get; private set; }
 }
 
+public class UpdateChargeStationInGroupCommandValidator : AbstractValidator<UpdateChargeStationInGroupCommand>
+{
+    public UpdateChargeStationInGroupCommandValidator()
+    {
+        RuleFor(v => v.GroupId)
+        .GreaterThan(0)
+        .NotEmpty();
+
+        RuleFor(v => v.Id)
+        .GreaterThan(0)
+        .NotEmpty();
+
+        RuleFor(v => v.Name)
+        .MaximumLength(200)
+        .NotEmpty();
+    }
+}

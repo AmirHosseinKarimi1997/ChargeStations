@@ -1,4 +1,5 @@
 ﻿
+using FluentValidation;
 using MediatR;
 
 namespace GreenFlux.Application.Groups.Commands.RemoveConnectorFromChargeStation;
@@ -12,10 +13,28 @@ public class RemoveConnectorFromChargeStationCommand : IRequest<bool>
         ConnectorNumber = connectorNumber;
     }
 
-    public int GroupId { get; set; }
+    public int GroupId { get; private set; }
 
-    public int ChargeStationId { get; set; }
+    public int ChargeStationId { get; private set; }
 
-    public int ConnectorNumber { get; set; }
+    public int ConnectorNumber { get; private set; }
+}
+
+public class RemoveConnectorFromChargeStationCommandValidator : AbstractValidator<RemoveConnectorFromChargeStationCommand>
+{
+    public RemoveConnectorFromChargeStationCommandValidator()
+    {
+        RuleFor(v => v.GroupId)
+        .GreaterThan(0)
+        .NotEmpty();
+
+        RuleFor(v => v.ChargeStationId)
+        .GreaterThan(0)
+        .NotEmpty();
+
+        RuleFor(v => v.ConnectorNumber)
+        .InclusiveBetween(1, 5)//5 from config
+        .NotEmpty();
+    }
 }
 

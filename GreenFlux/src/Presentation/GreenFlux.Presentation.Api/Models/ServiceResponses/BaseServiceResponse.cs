@@ -2,13 +2,24 @@
 
 public class BaseServiceResponse
 {
-    public BaseServiceResponse(bool isSuccess, string errorMessage = null)
+    public BaseServiceResponse(bool isSuccess, string[] errorMessages = null)
     {
         IsSuccess = isSuccess;
-        ErrorMessage = errorMessage;
+        ErrorMessages = errorMessages;
     }
 
     public bool IsSuccess { get; set; }
-    public string ErrorMessage { get; set; }
+    private string[] _errorMessages { get; set;}
+    public string[] ErrorMessages 
+    {
+        get { return _errorMessages; }
+        set 
+        { 
+            if (IsSuccess) 
+                _errorMessages = null;
+            else
+                _errorMessages = value;
+        }
+    }
 }
 

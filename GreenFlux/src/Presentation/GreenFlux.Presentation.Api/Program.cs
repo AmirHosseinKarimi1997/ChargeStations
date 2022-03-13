@@ -1,3 +1,4 @@
+using FluentValidation.AspNetCore;
 using GreenFlux.Api.Infrastructure.Filters;
 using GreenFlux.Application;
 using GreenFlux.Infra.DataAccess;
@@ -10,7 +11,8 @@ builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 
 builder.Services.AddScoped<ResultFilter>();
-builder.Services.AddScoped<ExceptionHandlerFilter>();
+builder.Services.AddScoped<ExceptionHandlerFilter>()
+    .AddFluentValidation((x => x.AutomaticValidationEnabled = false));
 
 // Add services to the container.
 

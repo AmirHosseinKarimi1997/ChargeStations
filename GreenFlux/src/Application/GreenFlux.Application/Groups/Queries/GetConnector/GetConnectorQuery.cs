@@ -1,4 +1,5 @@
 ﻿
+using FluentValidation;
 using GreenFlux.Application.Groups.Queries.Dtos;
 using MediatR;
 
@@ -18,3 +19,21 @@ public class GetConnectorQuery : IRequest<ConnectorDto>
     public int ConnectorNumber { get; set; }
 }
 
+public class GetConnectorQueryValidator : AbstractValidator<GetConnectorQuery>
+{
+    public GetConnectorQueryValidator()
+    {
+
+        RuleFor(v => v.GroupId)
+        .GreaterThan(0)
+        .NotEmpty();
+
+        RuleFor(v => v.ChargeStationId)
+        .GreaterThan(0)
+        .NotEmpty();
+
+        RuleFor(v => v.ConnectorNumber)
+        .InclusiveBetween(0, 5)
+        .NotEmpty();
+    }
+}

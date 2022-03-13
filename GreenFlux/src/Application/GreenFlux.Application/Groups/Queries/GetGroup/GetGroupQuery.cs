@@ -1,4 +1,5 @@
 ﻿
+using FluentValidation;
 using GreenFlux.Application.Groups.Queries.Dtos;
 using MediatR;
 
@@ -14,3 +15,12 @@ public class GetGroupQuery : IRequest<GroupDto>
     public int GroupId { get; private set; }
 }
 
+public class GetGroupQueryValidator : AbstractValidator<GetGroupQuery>
+{
+    public GetGroupQueryValidator()
+    {
+        RuleFor(v => v.GroupId)
+        .GreaterThan(0)
+        .NotEmpty();
+    }
+}
