@@ -15,8 +15,4 @@
     <ProjectReference Include="..\..\Domain\GreenFlux.Domain\GreenFlux.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Groups\Queries\" />
-  </ItemGroup>
-
 </Project>
