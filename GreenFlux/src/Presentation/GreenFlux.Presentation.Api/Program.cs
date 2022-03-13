@@ -1,4 +1,12 @@
+using GreenFlux.Application;
+using GreenFlux.Infra.DataAccess;
+
+
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddApplication();
+builder.Services.AddInfrastructure(builder.Configuration);
 
 // Add services to the container.
 
