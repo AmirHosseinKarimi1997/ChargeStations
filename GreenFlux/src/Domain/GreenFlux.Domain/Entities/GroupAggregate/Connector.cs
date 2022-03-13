@@ -1,5 +1,6 @@
 ﻿
 using GreenFlux.Domain.Common;
+using GreenFlux.Domain.Exceptions;
 
 namespace GreenFlux.Domain.Entities.GroupAggregate;
 
@@ -21,29 +22,16 @@ public class Connector: AuditableEntity
 
     public ChargeStation ChargeStation { get; private set; } = null!;
 
-    public void SetMaxCurrentInAmps(uint currentAmps)
+    internal void SetMaxCurrentInAmps(uint maxCurrentAmps)
     {
-        var sumCurrentAmps = this.ChargeStation.Group.CalculateMaxCurrentSumInAmps();
-
-        if (Id > 0)
-            sumCurrentAmps -= MaxCurrentInAmps;
-
-        if (sumCurrentAmps + currentAmps > this.ChargeStation.Group.CapacityInAmps)
-            throw new Exception();
-
-        this.MaxCurrentInAmps = currentAmps;
+        this.MaxCurrentInAmps = maxCurrentAmps;
     }
 
-    public void SetConnectorNumber(int connectorNumber)
+    internal void SetConnectorNumber(int connectorNumber)
     {
         //5 from config
         if (connectorNumber > 5)
-            throw new Exception();
-
-        var isAlreadyExist = this.ChargeStation.Connectors.Any(x => x.ConnectorNumber == connectorNumber);
-
-        if (isAlreadyExist)
-            throw new Exception();
+            throw new ConnectorNumberIsNotValidException();
 
         this.ConnectorNumber = connectorNumber;
     }

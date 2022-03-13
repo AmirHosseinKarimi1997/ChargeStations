@@ -1,5 +1,6 @@
 ﻿
 using GreenFlux.Domain.Common;
+using GreenFlux.Domain.Exceptions;
 
 namespace GreenFlux.Domain.Entities.GroupAggregate;
 
@@ -27,32 +28,49 @@ public class ChargeStation: AuditableEntity
     private readonly List<Connector> _connectors;
     public IReadOnlyCollection<Connector> Connectors => _connectors;
 
-    public void SetName(string name)
+    internal void SetName(string name)
     {
         this.Name = name;
     }
 
-    public void SetConnector(int connectorNumber, uint currentInAmps)
+    internal void AddConnector(int connectorNumber, uint maxCurrentInAmps)
+    {
+        ValidateAddingNewConnector(connectorNumber);
+
+        var connector = new Connector(connectorNumber, maxCurrentInAmps);
+        
+        this._connectors.Add(connector);
+    }
+
+    internal void RemoveConnector(int connectorNumber)
+    {
+        var connector = this._connectors.FirstOrDefault(x => x.ConnectorNumber == connectorNumber);
+
+        if (connector == null)
+            throw new ConnectorNotFoundException(this.Id, connectorNumber);
+
+        this._connectors.Remove(connector);
+    }
+
+    internal void SetConnectorMaxCurrent(int connectorNumber, uint maxCurrentInAmps)
+    {
+        var connector = this.Connectors.FirstOrDefault(x => x.ConnectorNumber == connectorNumber);
+
+        connector.SetMaxCurrentInAmps(maxCurrentInAmps);
+    }
+
+    private void ValidateAddingNewConnector(int connectorNumber)
     {
         var addedConnectorsCount = this._connectors.Count;
 
         //5 from config
         if (addedConnectorsCount >= 5)
-            throw new Exception();
+            throw new ChargeStationCapacityOverflowException();
 
-        var connector = new Connector(connectorNumber, currentInAmps);
-        
-        this._connectors.Add(connector);
-    }
+        var isAlreadyExist = this.Connectors.Any(x => x.ConnectorNumber == connectorNumber);
 
-    public void RemoveConnector(int connectorNumber)
-    {
-        var connector = this._connectors.FirstOrDefault(x => x.ConnectorNumber == connectorNumber);
-
-        if (connector == null)
-            throw new Exception();
-
-        this._connectors.Remove(connector);
+        if (isAlreadyExist)
+            throw new ConnectorAlreadyExistsException();
     }
 }
 

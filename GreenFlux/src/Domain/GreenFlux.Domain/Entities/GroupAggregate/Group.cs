@@ -1,4 +1,5 @@
 ﻿using GreenFlux.Domain.Common;
+using GreenFlux.Domain.Exceptions;
 
 namespace GreenFlux.Domain.Entities.GroupAggregate;
 
@@ -29,7 +30,7 @@ public class Group : AuditableEntity, IAggregateRoot
         var sumCurrent = CalculateMaxCurrentSumInAmps();
 
         if (Id > 0 && capacityinAmps < sumCurrent)
-            throw new Exception();
+            throw new GroupCapacityLessThanSumMaxCurrentException();
 
         this.CapacityInAmps = capacityinAmps;
     }
@@ -51,16 +52,63 @@ public class Group : AuditableEntity, IAggregateRoot
         var chargeStation = this._chargeStations.FirstOrDefault(x => x.Id == chargeStationId);
 
         if (chargeStation == null)
-            throw new Exception();
+            throw new ChargeStationNotFoundException(this.Id, chargeStationId);
 
         this._chargeStations.Remove(chargeStation);
     }
 
-    public ulong CalculateMaxCurrentSumInAmps()
+    public void UpdateChargeStation(int chargeStationId, string name)
     {
-        var sum = Convert.ToUInt64(this.ChargeStations.Sum(x => x.Connectors.Sum(x => x.MaxCurrentInAmps)));
+        var chargeStation = this.ChargeStations.FirstOrDefault(x => x.Id == chargeStationId);
 
-        return sum;
+        chargeStation.SetName(name);
+    }
+
+    public void AddConnectorToChargeStation(int chargeStationId, int connectorNumber, uint maxCurrentInAmps)
+    {
+        var sumCurrentAmps = CalculateMaxCurrentSumInAmps();
+
+        if (sumCurrentAmps + maxCurrentInAmps > this.CapacityInAmps)
+            throw new GroupCapacityOverflowException();
+
+        var chargeStation = this.ChargeStations.FirstOrDefault(x => x.Id == chargeStationId);
+
+        chargeStation.AddConnector(connectorNumber, maxCurrentInAmps);
+    }
+
+    public void RemoveConnectorFromChargeStation(int chargeStationId, int connectorNumber)
+    {
+        var chargeStation = this.ChargeStations.FirstOrDefault(x => x.Id == chargeStationId);
+
+        chargeStation.RemoveConnector(connectorNumber);
+    }
+
+    public void SetConnectorMaxCurrent(int chargeStationId, int connectorNumber, uint maxCurrentInAmps)
+    {
+        var sumCurrentAmps = CalculateMaxCurrentSumInAmpsExceptCurrentConnector(chargeStationId, connectorNumber);
+
+        if (sumCurrentAmps + maxCurrentInAmps > this.CapacityInAmps)
+            throw new GroupCapacityOverflowException();
+
+        var chargeStation = this.ChargeStations.FirstOrDefault(x => x.Id == chargeStationId);
+
+        chargeStation.SetConnectorMaxCurrent(connectorNumber, maxCurrentInAmps);
+    }
+
+    private ulong CalculateMaxCurrentSumInAmpsExceptCurrentConnector(int chargeStationId, int connectorNumber)
+    {
+        var connectors = this.ChargeStations.SelectMany(x => x.Connectors);
+        var sum = connectors.Where(x => x.ChargeStationId != chargeStationId && x.ConnectorNumber != connectorNumber).Sum(x => x.MaxCurrentInAmps);
+            
+        return Convert.ToUInt64(sum);
+    }
+
+    private ulong CalculateMaxCurrentSumInAmps()
+    {
+        var connectors = this.ChargeStations.SelectMany(x => x.Connectors);
+        var sum = connectors.Sum(x => x.MaxCurrentInAmps);
+
+        return Convert.ToUInt64(sum);
     }
 }
 
