@@ -54,6 +54,34 @@ public class GroupQueries : IGroupQueries
         return data;
     }
 
+    public async Task<IEnumerable<Connector>> GetAllConnectorsAsync(int groupId, int chargeStationId)
+    {
+        var data = await _context.ChargeStations
+                .Include(x => x.Connectors)
+                .Where(x => x.GroupId == groupId && x.Id == chargeStationId)
+                .FirstOrDefaultAsync();
+
+        if (data != null && data.Connectors != null)
+            return data.Connectors;
+        
+        return null;
+    }
+
+    public async Task<Connector> GetConnectorAsync(int groupId, int chargeStationId, int connectorNumber)
+    {
+        //because of using in memory sql, I can't use dapper and in looks ugly :\
+        Connector data;
+        var chargeStation = await _context.ChargeStations
+                        .Include(x => x.Connectors)
+                        .Where(x => x.GroupId == groupId && x.Id == chargeStationId)
+                        .FirstOrDefaultAsync();
+
+        if(chargeStation != null && chargeStation.Connectors != null) { }
+            data = chargeStation.Connectors.FirstOrDefault(x => x.ConnectorNumber == connectorNumber);
+
+        return data;
+    }
+
     public async Task<IEnumerable<Group>> GetAllGroupsAsync()
     {
         var data = await _context.Groups
@@ -95,7 +123,6 @@ public class GroupQueries : IGroupQueries
         //    return MapGroup(result);
         //}
     }
-
 
     //for dapper result mapping
     //private GroupDto MapGroup(dynamic result)
