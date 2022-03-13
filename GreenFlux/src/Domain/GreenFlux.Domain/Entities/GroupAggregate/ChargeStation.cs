@@ -63,8 +63,7 @@ public class ChargeStation: AuditableEntity
     {
         var addedConnectorsCount = this._connectors.Count;
 
-        //5 from config
-        if (addedConnectorsCount >= 5)
+        if (addedConnectorsCount >= ConfigHelper.MaxNumberOfConnectorsAttachedToChargeStations)
             throw new ChargeStationCapacityOverflowException();
 
         var isAlreadyExist = this.Connectors.Any(x => x.ConnectorNumber == connectorNumber);

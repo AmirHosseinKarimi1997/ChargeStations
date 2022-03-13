@@ -1,6 +1,7 @@
 ﻿
 using FluentValidation;
 using GreenFlux.Application.Groups.Queries.Dtos;
+using GreenFlux.Domain.Common;
 using MediatR;
 
 namespace GreenFlux.Application.Groups.Queries.GetConnector;
@@ -33,7 +34,7 @@ public class GetConnectorQueryValidator : AbstractValidator<GetConnectorQuery>
         .NotEmpty();
 
         RuleFor(v => v.ConnectorNumber)
-        .InclusiveBetween(0, 5)
+        .InclusiveBetween(0, ConfigHelper.MaxNumberOfConnectorsAttachedToChargeStations)
         .NotEmpty();
     }
 }

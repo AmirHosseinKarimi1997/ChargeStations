@@ -29,8 +29,7 @@ public class Connector: AuditableEntity
 
     internal void SetConnectorNumber(int connectorNumber)
     {
-        //5 from config
-        if (connectorNumber > 5)
+        if (connectorNumber > ConfigHelper.MaxNumberOfConnectorsAttachedToChargeStations)
             throw new ConnectorNumberIsNotValidException();
 
         this.ConnectorNumber = connectorNumber;

@@ -12,12 +12,12 @@ public class ExceptionHandlerFilter : IExceptionFilter, IActionFilter
     private string errorLogTemplate = $"{{@ControllerName}}{{@Params}}";
     private readonly IList<Type> _exceptionBaseTypes;
     private IDictionary<string, object> _actionArguments;
-    //private readonly ILogger _logger;
+    private readonly ILogger<ExceptionHandlerFilter> _logger;
     private string _controllerName;
 
-    public ExceptionHandlerFilter()//ILogger logger
+    public ExceptionHandlerFilter(ILogger<ExceptionHandlerFilter> logger)
     {
-        //_logger = logger;
+        _logger = logger;
         _exceptionBaseTypes = new List<Type> { typeof(DomainBaseException), typeof(ApplicationBaseException) };
     }
 
@@ -47,7 +47,7 @@ public class ExceptionHandlerFilter : IExceptionFilter, IActionFilter
         filterContext.ExceptionHandled = true;
 
         var inputs = _actionArguments;
-        //_logger.LogError(filterContext.Exception, errorLogTemplate, _controllerName, inputs);
+        _logger.LogError(filterContext.Exception, errorLogTemplate, _controllerName, inputs);
 
     }
 

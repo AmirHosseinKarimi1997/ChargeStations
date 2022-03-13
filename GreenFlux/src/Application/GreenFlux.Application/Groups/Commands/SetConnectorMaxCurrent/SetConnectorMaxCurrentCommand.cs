@@ -1,5 +1,6 @@
 ﻿
 using FluentValidation;
+using GreenFlux.Domain.Common;
 using MediatR;
 
 namespace GreenFlux.Application.Groups.Commands.SetConnectorMaxCurrent;
@@ -33,7 +34,7 @@ public class SetConnectorMaxCurrentCommandValidator : AbstractValidator<SetConne
         .NotEmpty();
 
         RuleFor(v => v.ConnectorNumber)
-        .InclusiveBetween(1, 5)//5 from config
+        .InclusiveBetween(1, ConfigHelper.MaxNumberOfConnectorsAttachedToChargeStations)
         .NotEmpty();
 
         RuleFor(v => (int)v.MaxCurrnetInAmps)

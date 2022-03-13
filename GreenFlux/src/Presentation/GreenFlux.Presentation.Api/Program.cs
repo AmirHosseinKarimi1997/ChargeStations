@@ -1,8 +1,8 @@
 using FluentValidation.AspNetCore;
 using GreenFlux.Api.Infrastructure.Filters;
 using GreenFlux.Application;
+using GreenFlux.Domain.Common;
 using GreenFlux.Infra.DataAccess;
-
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +14,7 @@ builder.Services.AddScoped<ResultFilter>();
 builder.Services.AddScoped<ExceptionHandlerFilter>()
     .AddFluentValidation((x => x.AutomaticValidationEnabled = false));
 
+ConfigHelper.MaxNumberOfConnectorsAttachedToChargeStations = Convert.ToInt32(builder.Configuration["MaxNumberOfConnectorsAttachedToChargeStations"]);
 // Add services to the container.
 
 builder.Services.AddControllers();
