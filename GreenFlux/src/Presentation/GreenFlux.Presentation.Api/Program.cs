@@ -1,5 +1,6 @@
 using FluentValidation.AspNetCore;
 using GreenFlux.Api.Infrastructure.Filters;
+using GreenFlux.Api.Models.GroupViewModels;
 using GreenFlux.Application;
 using GreenFlux.Domain.Common;
 using GreenFlux.Infra.DataAccess;
