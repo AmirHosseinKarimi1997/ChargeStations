@@ -1,4 +1,5 @@
 ﻿
+using GreenFlux.Application.Exceptions;
 using GreenFlux.Domain.Entities.GroupAggregate;
 using MediatR;
 
@@ -18,7 +19,7 @@ public class DeleteGroupCommandHandler: IRequestHandler<DeleteGroupCommand, bool
         var group = await _groupRepository.GetAsync(request.Id);
 
         if (group == null)
-            throw new Exception();
+            throw new NotFoundException(nameof(Group), request.Id);
 
         _groupRepository.Delete(group);
 

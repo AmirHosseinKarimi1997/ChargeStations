@@ -1,4 +1,5 @@
 ﻿
+using GreenFlux.Application.Exceptions;
 using GreenFlux.Domain.Entities.GroupAggregate;
 using MediatR;
 
@@ -17,13 +18,13 @@ public class UpdateChargeStationInGroupCommandHandler : IRequestHandler<UpdateCh
     {
         var group = await _groupRepository.GetAsync(request.GroupId);
         if (group == null)
-            throw new Exception();
+            throw new NotFoundException(nameof(Group), request.GroupId);
 
         var chargeStation = group.ChargeStations.FirstOrDefault(x => x.Id == request.Id);
         if (chargeStation == null)
-            throw new Exception();
+            throw new ChargeStationNotFoundException(request.GroupId, request.Id);
 
-        chargeStation.SetName(request.Name);
+        group.UpdateChargeStation(request.Id, request.Name);
 
         await _groupRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 

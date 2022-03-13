@@ -1,4 +1,5 @@
 ﻿
+using GreenFlux.Application.Exceptions;
 using GreenFlux.Domain.Entities.GroupAggregate;
 using MediatR;
 
@@ -18,7 +19,7 @@ public class SetGroupCapacityInAmpsCommandHandler : IRequestHandler<SetGroupCapa
         var group = await _groupRepository.GetAsync(request.GroupId);
 
         if (group == null)
-            throw new Exception();
+            throw new NotFoundException(nameof(Group), request.GroupId);
 
         group.SetCapacity(request.CapacityInAmps);
 
