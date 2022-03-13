@@ -20,7 +20,7 @@ public class GetGroupQueryHandler : IRequestHandler<GetGroupQuery, GroupDto>
         var data = await _query.GetGroupAsync(request.GroupId);
 
         if(data == null)
-            return default(GroupDto);
+            return null;
 
         return Mapper.MapToDto(data);
     }

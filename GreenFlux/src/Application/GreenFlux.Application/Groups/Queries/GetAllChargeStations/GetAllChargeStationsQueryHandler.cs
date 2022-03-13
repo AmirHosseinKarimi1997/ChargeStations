@@ -20,7 +20,7 @@ public class GetAllChargeStationsQueryHandler : IRequestHandler<GetAllChargeStat
         var data = await _query.GetAllChargeStationsAsync(request.GroupId);
 
         if (data == null)
-            return default(IEnumerable<ChargeStationDto>);
+            return null;
 
         var result = data.Select(x => Mapper.MapToDto(x));
         return result;

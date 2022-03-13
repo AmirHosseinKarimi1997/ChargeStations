@@ -45,6 +45,10 @@ public class ResultFilter : IResultFilter
 
         Type responseClass = typeof(NullDataServiceResponse);
         object serviceResponseInstance = Activator.CreateInstance(responseClass);
+
+        PropertyInfo dataPropertyInfo = responseClass.GetProperty(nameof(NullDataServiceResponse.Result));
+
+        dataPropertyInfo.SetValue(serviceResponseInstance, null, null);
         objectResult.Value = serviceResponseInstance;
     }
 
@@ -60,7 +64,7 @@ public class ResultFilter : IResultFilter
 
         var val = objectResult.Value;
 
-        PropertyInfo dataPropertyInfo = constructedServiceResponseModel.GetProperty(nameof(ServiceResponse<String>.Result));
+        PropertyInfo dataPropertyInfo = constructedServiceResponseModel.GetProperty(nameof(ServiceResponse<dynamic>.Result));
         dataPropertyInfo.SetValue(serviceResponseInstance, val, null);
         objectResult.Value = serviceResponseInstance;
     }

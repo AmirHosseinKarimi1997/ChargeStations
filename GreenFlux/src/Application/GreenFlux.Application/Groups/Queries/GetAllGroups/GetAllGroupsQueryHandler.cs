@@ -20,7 +20,7 @@ public class GetAllGroupsQueryHandler : IRequestHandler<GetAllGroupsQuery, IEnum
         var data = await _query.GetAllGroupsAsync();
 
         if (data == null)
-            return default(IEnumerable<GroupDto>);
+            return null;
 
         var result = data.Select(x => Mapper.MapToDto(x));
         return result;

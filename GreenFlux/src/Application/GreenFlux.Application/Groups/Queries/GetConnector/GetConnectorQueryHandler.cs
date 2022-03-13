@@ -20,7 +20,7 @@ public class GetConnectorQueryHandler : IRequestHandler<GetConnectorQuery, Conne
         var data = await _query.GetConnectorAsync(request.GroupId, request.ChargeStationId, request.ConnectorNumber);
 
         if (data == null)
-            return default(ConnectorDto);
+            return null;
 
         return Mapper.MapToDto(data);
     }
