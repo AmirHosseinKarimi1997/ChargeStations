@@ -1,3 +1,4 @@
+using GreenFlux.Api.Infrastructure.Filters;
 using GreenFlux.Application;
 using GreenFlux.Infra.DataAccess;
 
@@ -7,6 +8,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
+
+builder.Services.AddScoped<ResultFilter>();
+builder.Services.AddScoped<ExceptionHandlerFilter>();
 
 // Add services to the container.
 
