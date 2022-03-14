@@ -25,18 +25,11 @@ public class GroupQueries : IGroupQueries
         _context = context ?? throw new ArgumentNullException(nameof(context));
     }
 
-    //For Dapper, but because I'm using in memory version of EF, I will use EF
-    //for these types of query classes, we can use readonly connection strings
-    //private string _connectionString = string.Empty;
-
-    //public GroupQueries(string constr)
-    //{
-    //    _connectionString = !string.IsNullOrWhiteSpace(constr) ? constr : throw new ArgumentNullException(nameof(constr));
-    //}
 
     public async Task<ChargeStation> GetChargeStationAsync(int groupId, int id)
     {
         var data = await _context.ChargeStations
+                        .AsNoTracking()
                         .Include(x => x.Connectors)
                         .Where(x => x.GroupId == groupId && x.Id == id)
                         .FirstOrDefaultAsync();
@@ -47,6 +40,7 @@ public class GroupQueries : IGroupQueries
     public async Task<IEnumerable<ChargeStation>> GetAllChargeStationsAsync(int groupId)
     {
         var data = await _context.ChargeStations
+                .AsNoTracking()
                 .Include(x => x.Connectors)
                 .Where(x => x.GroupId == groupId)
                 .ToListAsync();
@@ -57,6 +51,7 @@ public class GroupQueries : IGroupQueries
     public async Task<IEnumerable<Connector>> GetAllConnectorsAsync(int groupId, int chargeStationId)
     {
         var data = await _context.ChargeStations
+                .AsNoTracking()
                 .Include(x => x.Connectors)
                 .Where(x => x.GroupId == groupId && x.Id == chargeStationId)
                 .FirstOrDefaultAsync();
@@ -72,6 +67,7 @@ public class GroupQueries : IGroupQueries
         //because of using in memory sql, I can't use dapper and in looks ugly :\
         Connector data;
         var chargeStation = await _context.ChargeStations
+                        .AsNoTracking()
                         .Include(x => x.Connectors)
                         .Where(x => x.GroupId == groupId && x.Id == chargeStationId)
                         .FirstOrDefaultAsync();
@@ -85,6 +81,7 @@ public class GroupQueries : IGroupQueries
     public async Task<IEnumerable<Group>> GetAllGroupsAsync()
     {
         var data = await _context.Groups
+                .AsNoTracking()
                 .Include(x => x.ChargeStations)
                 .ThenInclude(x => x.Connectors)
                 .ToListAsync();
@@ -95,6 +92,7 @@ public class GroupQueries : IGroupQueries
     public async Task<Group> GetGroupAsync(int id)
     {
         var data = await _context.Groups
+                        .AsNoTracking()
                         .Include(x => x.ChargeStations)
                         .ThenInclude(x => x.Connectors)
                         .Where(x => x.Id == id)

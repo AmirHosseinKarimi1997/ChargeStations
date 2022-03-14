@@ -4,24 +4,11 @@ using GreenFlux.Api.Models.GroupViewModels;
 using GreenFlux.Application;
 using GreenFlux.Domain.Common;
 using GreenFlux.Infra.DataAccess;
-
+using GreenFlux.Presentation.Api;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddApplication();
-builder.Services.AddInfrastructure(builder.Configuration);
-
-builder.Services.AddScoped<ResultFilter>();
-builder.Services.AddScoped<ExceptionHandlerFilter>()
-    .AddFluentValidation((x => x.AutomaticValidationEnabled = false));
-
-ConfigHelper.MaxNumberOfConnectorsAttachedToChargeStations = Convert.ToInt32(builder.Configuration["MaxNumberOfConnectorsAttachedToChargeStations"]);
-// Add services to the container.
-
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+ServiceRegistration.RegisterServices(builder.Services, builder.Configuration);
 
 var app = builder.Build();
 
