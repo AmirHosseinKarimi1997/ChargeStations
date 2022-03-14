@@ -17,6 +17,7 @@ public partial class UnitOfWork: DbContext, IUnitOfWork
         IDateTime dateTime) : base(options)
     {
         _dateTime = dateTime;
+        this.Database.EnsureCreated();
     }
 
     public DbSet<Group> Groups => Set<Group>();
