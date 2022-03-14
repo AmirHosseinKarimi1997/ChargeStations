@@ -15,19 +15,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{95C8FB9C-5B31-46A6-84DD-3654D3548F63}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenFlux.Application", "src\Application\GreenFlux.Application\GreenFlux.Application.csproj", "{67C0F4DD-8C3B-440A-9449-A696D79E00B9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GreenFlux.Application", "src\Application\GreenFlux.Application\GreenFlux.Application.csproj", "{67C0F4DD-8C3B-440A-9449-A696D79E00B9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenFlux.Presentation.Api", "src\Presentation\GreenFlux.Presentation.Api\GreenFlux.Presentation.Api.csproj", "{A76730EF-3764-4FE4-AC04-7400FC4D7303}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GreenFlux.Presentation.Api", "src\Presentation\GreenFlux.Presentation.Api\GreenFlux.Presentation.Api.csproj", "{A76730EF-3764-4FE4-AC04-7400FC4D7303}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenFlux.Domain", "src\Domain\GreenFlux.Domain\GreenFlux.Domain.csproj", "{57E1E28A-2469-43BD-B093-466DA3C30B68}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GreenFlux.Domain", "src\Domain\GreenFlux.Domain\GreenFlux.Domain.csproj", "{57E1E28A-2469-43BD-B093-466DA3C30B68}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenFlux.Infra.DataAccess", "src\Infrastructure\GreenFlux.Infra.DataAccess\GreenFlux.Infra.DataAccess.csproj", "{51B8FC6D-02A2-421E-B5DA-CBA59D69F96A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GreenFlux.Infra.DataAccess", "src\Infrastructure\GreenFlux.Infra.DataAccess\GreenFlux.Infra.DataAccess.csproj", "{51B8FC6D-02A2-421E-B5DA-CBA59D69F96A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.UnitTests", "tests\Application.UnitTests\Application.UnitTests.csproj", "{72AD1C12-0DEA-41FD-8CC1-E6589F906DF4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application.IntegrationTests", "tests\Application.IntegrationTests\Application.IntegrationTests.csproj", "{D8D15721-B872-4E7D-8114-D0A159541EDF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.IntegrationTests", "tests\Application.IntegrationTests\Application.IntegrationTests.csproj", "{D8D15721-B872-4E7D-8114-D0A159541EDF}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain.UnitTests", "tests\Domain.UnitTests\Domain.UnitTests.csproj", "{29738D71-5175-427A-A392-8E4C49C75DA6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenFlux.Domian.UnitTests", "tests\GreenFlux.Domian.UnitTests\GreenFlux.Domian.UnitTests.csproj", "{5641A155-22B6-4E81-8619-89E1F8F22074}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,18 +49,14 @@ Global
 		{51B8FC6D-02A2-421E-B5DA-CBA59D69F96A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{51B8FC6D-02A2-421E-B5DA-CBA59D69F96A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{51B8FC6D-02A2-421E-B5DA-CBA59D69F96A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{72AD1C12-0DEA-41FD-8CC1-E6589F906DF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{72AD1C12-0DEA-41FD-8CC1-E6589F906DF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{72AD1C12-0DEA-41FD-8CC1-E6589F906DF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{72AD1C12-0DEA-41FD-8CC1-E6589F906DF4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D8D15721-B872-4E7D-8114-D0A159541EDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D8D15721-B872-4E7D-8114-D0A159541EDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D8D15721-B872-4E7D-8114-D0A159541EDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D8D15721-B872-4E7D-8114-D0A159541EDF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{29738D71-5175-427A-A392-8E4C49C75DA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{29738D71-5175-427A-A392-8E4C49C75DA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{29738D71-5175-427A-A392-8E4C49C75DA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{29738D71-5175-427A-A392-8E4C49C75DA6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5641A155-22B6-4E81-8619-89E1F8F22074}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5641A155-22B6-4E81-8619-89E1F8F22074}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5641A155-22B6-4E81-8619-89E1F8F22074}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5641A155-22B6-4E81-8619-89E1F8F22074}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -76,9 +70,8 @@ Global
 		{A76730EF-3764-4FE4-AC04-7400FC4D7303} = {95C8FB9C-5B31-46A6-84DD-3654D3548F63}
 		{57E1E28A-2469-43BD-B093-466DA3C30B68} = {B8453576-B54C-4DB7-BC16-EF3D5403453B}
 		{51B8FC6D-02A2-421E-B5DA-CBA59D69F96A} = {12C07A76-7D03-4862-BAB5-BB227D3A9B63}
-		{72AD1C12-0DEA-41FD-8CC1-E6589F906DF4} = {64F57F27-5AEC-4742-B806-32EDF7FE58E8}
 		{D8D15721-B872-4E7D-8114-D0A159541EDF} = {64F57F27-5AEC-4742-B806-32EDF7FE58E8}
-		{29738D71-5175-427A-A392-8E4C49C75DA6} = {64F57F27-5AEC-4742-B806-32EDF7FE58E8}
+		{5641A155-22B6-4E81-8619-89E1F8F22074} = {64F57F27-5AEC-4742-B806-32EDF7FE58E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9F41A259-F552-4BD2-8B65-066B06523799}
