@@ -1,7 +1,7 @@
 
-# GreenFlux Assignment
+# Test Project
 
-This is GreenFlux solution which is created with ASP.NET Core following the principles of Clean Architecture.
+This is a test project which is created with ASP.NET Core following the principles of Clean Architecture.
 
 ## Technologies
 
